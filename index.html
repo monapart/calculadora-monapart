@@ -34,7 +34,7 @@
         .btn-monapart:hover { opacity: 0.9; }
     </style>
 </head>
-<body class="p-2 md:p-6 lg:p-10 flex items-center min-h-screen">
+<body class="p-6 md:p-10 lg:p-12 flex items-center min-h-screen">
 
     <div class="max-w-6xl mx-auto w-full">
         <header class="mb-8 border-b border-black pb-4">
@@ -42,7 +42,7 @@
             <p class="lora-text">Calculadora del cambio para agentes</p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
             
             <div class="flex flex-col space-y-8">
                 <section>
@@ -77,21 +77,21 @@
                     <div class="space-y-6">
                         <div>
                             <div class="flex justify-between mb-1 text-slider-label font-medium">
-                                <span>Gasto mensual de portales inmobiliarios</span>
+                                <span class="pr-4">Gasto mensual de portales inmobiliarios</span>
                                 <span><span id="val-portales">300</span>€</span>
                             </div>
                             <input type="range" id="portales" min="0" max="2000" step="50" value="300">
                         </div>
                         <div>
                             <div class="flex justify-between mb-1 text-slider-label font-medium">
-                                <span>Gasto mensual en herramientas</span>
+                                <span class="pr-4">Gasto mensual en herramientas</span>
                                 <span><span id="val-herramientas">150</span>€</span>
                             </div>
                             <input type="range" id="herramientas" min="0" max="1000" step="10" value="150">
                         </div>
                         <div>
                             <div class="flex justify-between mb-1 text-slider-label font-medium">
-                                <span>Gasto de fotografías y posicionamiento</span>
+                                <span class="pr-4">Gasto de fotografías y posicionamiento</span>
                                 <span><span id="val-foto">250</span>€</span>
                             </div>
                             <input type="range" id="foto" min="0" max="1000" step="50" value="250">
@@ -100,14 +100,14 @@
                 </section>
             </div>
 
-            <div class="flex flex-col">
-                <div class="monapart-bg text-white p-10 flex-grow flex flex-col justify-between h-full">
+            <div class="flex flex-col mt-8 lg:mt-0">
+                <div class="monapart-bg text-white p-8 md:p-10 flex-grow flex flex-col justify-between h-full">
                     <div>
                         <p class="text-result-label opacity-90 mb-1">Beneficio neto en Monapart</p>
                         <p class="text-6xl font-light tracking-tighter" id="neto-monapart">0€</p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 pt-8 border-t border-white/10 mt-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-8 border-t border-white/10 mt-6">
                         <div>
                             <p class="text-result-label mb-1">Tu beneficio neto actual</p>
                             <p class="text-result-number" id="neto-actual">0€</p>
@@ -134,69 +134,5 @@
             </div>
         </div>
 
-        <p class="footer-disclaimer text-gray-500 mt-6 leading-relaxed italic">
-            *Estimación basada en el modelo de split progresivo de Monapart (73% a 99%) descontando 50€/mes de herramientas y 100€ por activación de propiedad.
-        </p>
-    </div>
-
-    <script>
-        const ids = ['ventas', 'fees', 'split', 'portales', 'herramientas', 'foto'];
-        const inputs = ids.map(id => document.getElementById(id));
-        
-        // Ajuste: Formato de miles con punto SIEMPRE (8.000, 10.000, etc.)
-        function fmt(num) {
-            return new Intl.NumberFormat('es-ES', { 
-                useGrouping: true,
-                minimumFractionDigits: 0 
-            }).format(Math.round(num));
-        }
-
-        function calcular() {
-            const v = parseInt(document.getElementById('ventas').value);
-            const f = parseInt(document.getElementById('fees').value);
-            const s = parseInt(document.getElementById('split').value) / 100;
-            const p = parseInt(document.getElementById('portales').value);
-            const h = parseInt(document.getElementById('herramientas').value);
-            const foto = parseInt(document.getElementById('foto').value);
-
-            document.getElementById('val-ventas').innerText = v;
-            document.getElementById('val-fees').innerText = fmt(f);
-            document.getElementById('val-split').innerText = (s * 100).toFixed(0);
-            document.getElementById('val-portales').innerText = fmt(p);
-            document.getElementById('val-herramientas').innerText = fmt(h);
-            document.getElementById('val-foto').innerText = fmt(foto);
-
-            const facturacionActual = v * f;
-            const costesFijosActuales = (p * 12) + (h * 12) + (v * foto);
-            const netoActual = (facturacionActual * s) - costesFijosActuales;
-
-            const ventasMona = v * 1.14; 
-            const feesMona = f * 1.085;   
-            const totalFacturadoMona = ventasMona * feesMona;
-
-            let brutoAgenteMona = 0;
-            if (totalFacturadoMona <= 40000) {
-                brutoAgenteMona = totalFacturadoMona * 0.73;
-            } else if (totalFacturadoMona <= 80000) {
-                brutoAgenteMona = (40000 * 0.73) + (totalFacturadoMona - 40000) * 0.77;
-            } else if (totalFacturadoMona <= 120000) {
-                brutoAgenteMona = (40000 * 0.73) + (40000 * 0.77) + (totalFacturadoMona - 80000) * 0.88;
-            } else {
-                brutoAgenteMona = (40000 * 0.73) + (40000 * 0.77) + (40000 * 0.88) + (totalFacturadoMona - 120000) * 0.99;
-            }
-
-            const costesMona = (50 * 12) + (ventasMona * 100);
-            const netoFinalMona = brutoAgenteMona - costesMona;
-
-            document.getElementById('neto-actual').innerText = fmt(Math.max(0, netoActual)) + '€';
-            document.getElementById('neto-monapart').innerText = fmt(netoFinalMona) + '€';
-            
-            const diferencia = netoFinalMona - netoActual;
-            document.getElementById('ahorro-total').innerText = '+' + fmt(diferencia) + '€';
-        }
-
-        inputs.forEach(input => input.addEventListener('input', calcular));
-        calcular();
-    </script>
-</body>
-</html>
+        <p class="footer-disclaimer text-gray-500 mt-8 leading-relaxed italic">
+            *Estimación basada en el modelo de split progresivo de Monapart (73% a 99%) descontando 50€
