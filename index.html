@@ -15,18 +15,21 @@
         
         .text-slider-label { font-size: 1.15rem; text-transform: none; }
         
-        /* Ajuste: Etiquetas de resultados un 10% más pequeñas (de 1.15rem a 1.03rem) */
+        /* Ajuste: Etiquetas de resultados un 10% más pequeñas */
         .text-result-label { font-size: 1.03rem; color: white; text-transform: none; }
         
-        /* Ajuste: Números de resultados un 25% más grandes */
-        .text-result-number { font-size: 2.3rem; font-weight: 500; }
+        /* Ajuste: Números de resultados (adaptable para evitar superposición en móvil) */
+        .text-result-number { font-size: 1.6rem; font-weight: 500; }
+        @media (min-width: 768px) {
+            .text-result-number { font-size: 2.3rem; }
+        }
         
-        /* Ajuste: Disclaimer un 20% más pequeño (de 0.95rem a 0.76rem) */
+        /* Ajuste: Disclaimer un 20% más pequeño */
         .footer-disclaimer { font-size: 0.76rem; line-height: 1.3; }
         
         .lora-text { font-family: 'Lora', serif; font-size: 1.56rem; font-weight: 400; text-transform: none; }
 
-        /* Ajuste: Títulos de sección negrita y 50% más grandes (de 10px a 15px) */
+        /* Ajuste: Títulos de sección negrita y 50% más grandes */
         .section-header { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
 
         /* Ajuste: Botón personalizado */
