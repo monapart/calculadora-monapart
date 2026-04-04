@@ -3,32 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Cambio | Monapart</title>
+    <title>Calculadora del cambio | Monapart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #000; }
-        .monapart-border { border: 1px solid #000; }
-        .monapart-bg { background-color: #000; }
+        .monapart-bg { background-color: #2d2d2c; }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; cursor: pointer; background: #000; }
         input[type=range]::-webkit-slider-thumb { height: 18px; width: 18px; border-radius: 50%; background: #000; cursor: pointer; -webkit-appearance: none; margin-top: -8px; border: 2px solid #fff; box-shadow: 0 0 0 1px #000; }
-        .card { border: 1px solid #e5e5e5; transition: all 0.3s ease; }
-        .card:hover { border-color: #000; }
+        
+        /* Ajustes de tamaño específicos solicitados */
+        .text-slider-label { font-size: 1.15rem; text-transform: none; } /* ~25% más que el estándar */
+        .text-result-label { font-size: 1.15rem; color: white; text-transform: none; }
+        .text-result-number { font-size: 1.85rem; font-weight: 500; } /* +25% respecto al anterior */
+        .footer-disclaimer { font-size: 0.95rem; line-height: 1.4; } /* ~50% más que el original de 10px */
     </style>
 </head>
 <body class="p-4 md:p-12">
 
     <div class="max-w-6xl mx-auto">
-        <header class="mb-12 border-b border-black pb-6 flex justify-between items-end">
-            <div>
-                <h1 class="text-4xl font-bold tracking-tighter uppercase">Monapart</h1>
-                <p class="text-sm uppercase tracking-widest mt-1">Calculadora de Rentabilidad para Agentes</p>
-            </div>
-            <div class="text-right hidden md:block">
-                <p class="text-xs font-bold uppercase">Cambia de vida,</p>
-                <p class="text-xs uppercase">no solo de marca.</p>
-            </div>
+        <header class="mb-12 border-b border-black pb-8">
+            <img src="https://www.monapart.com/sites/default/files/monapart-logo.png" alt="Monapart" class="h-12 mb-4">
+            <p class="text-sm uppercase tracking-widest font-bold">Calculadora del cambio para agentes</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -39,22 +36,22 @@
                     <h2 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-gray-200 pb-2">1. Tu producción actual</h2>
                     <div class="space-y-8">
                         <div>
-                            <div class="flex justify-between mb-2 text-sm uppercase font-medium">
+                            <div class="flex justify-between mb-2 text-slider-label font-medium">
                                 <span>Ventas anuales</span>
-                                <span><span id="val-ventas">8</span> operaciones</span>
+                                <span><span id="val-ventas">8</span></span>
                             </div>
                             <input type="range" id="ventas" min="1" max="40" value="8">
                         </div>
                         <div>
-                            <div class="flex justify-between mb-2 text-sm uppercase font-medium">
+                            <div class="flex justify-between mb-2 text-slider-label font-medium">
                                 <span>Honorarios medios</span>
                                 <span><span id="val-fees">8.000</span>€</span>
                             </div>
                             <input type="range" id="fees" min="3000" max="30000" step="500" value="8000">
                         </div>
                         <div>
-                            <div class="flex justify-between mb-2 text-sm uppercase font-medium">
-                                <span>Tu Split actual (%)</span>
+                            <div class="flex justify-between mb-2 text-slider-label font-medium">
+                                <span>Tu split actual (%)</span>
                                 <span><span id="val-split">50</span>%</span>
                             </div>
                             <input type="range" id="split" min="30" max="100" value="50">
@@ -66,23 +63,23 @@
                     <h2 class="text-xs font-bold uppercase tracking-widest mb-6 border-b border-gray-200 pb-2">2. Tus costes fijos actuales</h2>
                     <div class="space-y-8">
                         <div>
-                            <div class="flex justify-between mb-2 text-sm uppercase font-medium">
-                                <span>Portales (mensual)</span>
-                                <span><span id="val-portales">300</span>€/mes</span>
+                            <div class="flex justify-between mb-2 text-slider-label font-medium">
+                                <span>Gasto mensual de portales inmobiliarios</span>
+                                <span><span id="val-portales">300</span>€</span>
                             </div>
                             <input type="range" id="portales" min="0" max="2000" step="50" value="300">
                         </div>
                         <div>
-                            <div class="flex justify-between mb-2 text-sm uppercase font-medium">
-                                <span>Herramientas (CRM, firma, valorador)</span>
-                                <span><span id="val-herramientas">150</span>€/mes</span>
+                            <div class="flex justify-between mb-2 text-slider-label font-medium">
+                                <span>Gasto mensual en herramientas</span>
+                                <span><span id="val-herramientas">150</span>€</span>
                             </div>
                             <input type="range" id="herramientas" min="0" max="1000" step="10" value="150">
                         </div>
                         <div>
-                            <div class="flex justify-between mb-2 text-sm uppercase font-medium">
-                                <span>Foto y Mkt (por propiedad)</span>
-                                <span><span id="val-foto">250</span>€/propiedad</span>
+                            <div class="flex justify-between mb-2 text-slider-label font-medium">
+                                <span>Gasto de fotografías y posicionamiento</span>
+                                <span><span id="val-foto">250</span>€</span>
                             </div>
                             <input type="range" id="foto" min="0" max="1000" step="50" value="250">
                         </div>
@@ -93,25 +90,25 @@
             <div class="lg:sticky lg:top-12 h-fit">
                 <div class="monapart-bg text-white p-10 rounded-none space-y-8">
                     <div>
-                        <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-60">Beneficio Neto en Monapart</p>
+                        <p class="text-result-label opacity-90 mb-2">Beneficio neto en Monapart</p>
                         <p class="text-6xl font-light tracking-tighter" id="neto-monapart">0€</p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-8 pt-8 border-t border-white/20">
                         <div>
-                            <p class="text-[10px] uppercase tracking-widest opacity-60 mb-1">Tu beneficio actual</p>
-                            <p class="text-xl font-medium" id="neto-actual">0€</p>
+                            <p class="text-result-label mb-1">Tu beneficio neto anual</p>
+                            <p class="text-result-number" id="neto-actual">0€</p>
                         </div>
                         <div>
-                            <p class="text-[10px] uppercase tracking-widest opacity-60 mb-1">Incremento anual</p>
-                            <p class="text-xl font-medium text-white" id="ahorro-total">+0€</p>
+                            <p class="text-result-label mb-1">Incremento anual</p>
+                            <p class="text-result-number" id="ahorro-total">+0€</p>
                         </div>
                     </div>
 
                     <div class="space-y-4 pt-4">
                         <div class="flex items-start space-x-3">
                             <span class="text-lg">⚡</span>
-                            <p class="text-xs leading-relaxed opacity-80">Incluye <strong>efecto Monapart</strong>: +20% en ventas y +10% en ticket medio por fuerza de marca.</p>
+                            <p class="text-xs leading-relaxed opacity-80">Incluye efecto Monapart: +14% en ventas y +8,5% en ticket medio por fuerza de marca.</p>
                         </div>
                         <div class="flex items-start space-x-3">
                             <span class="text-lg">⏳</span>
@@ -122,7 +119,7 @@
                     <a href="https://www.monapart.com/unete" class="block w-full bg-white text-black text-center py-4 text-xs font-bold uppercase tracking-widest hover:bg-gray-200 transition">Solicitar entrevista personalizada</a>
                 </div>
 
-                <p class="text-[10px] text-gray-400 mt-6 leading-relaxed italic">
+                <p class="footer-disclaimer text-gray-500 mt-8 leading-relaxed italic">
                     *Estimación basada en el modelo de split progresivo de Monapart (73% a 99%) descontando 50€/mes de herramientas y 100€ por activación de propiedad.
                 </p>
             </div>
@@ -133,8 +130,12 @@
         const ids = ['ventas', 'fees', 'split', 'portales', 'herramientas', 'foto'];
         const inputs = ids.map(id => document.getElementById(id));
         
+        // Función para formatear con puntos de millares (estilo ES)
+        function fmt(num) {
+            return Math.round(num).toLocaleString('es-ES');
+        }
+
         function calcular() {
-            // Obtener valores
             const v = parseInt(document.getElementById('ventas').value);
             const f = parseInt(document.getElementById('fees').value);
             const s = parseInt(document.getElementById('split').value) / 100;
@@ -142,46 +143,43 @@
             const h = parseInt(document.getElementById('herramientas').value);
             const foto = parseInt(document.getElementById('foto').value);
 
-            // Actualizar etiquetas
             document.getElementById('val-ventas').innerText = v;
-            document.getElementById('val-fees').innerText = f.toLocaleString();
+            document.getElementById('val-fees').innerText = fmt(f);
             document.getElementById('val-split').innerText = (s * 100).toFixed(0);
-            document.getElementById('val-portales').innerText = p;
-            document.getElementById('val-herramientas').innerText = h;
-            document.getElementById('val-foto').innerText = foto;
+            document.getElementById('val-portales').innerText = fmt(p);
+            document.getElementById('val-herramientas').innerText = fmt(h);
+            document.getElementById('val-foto').innerText = fmt(foto);
 
             // 1. CÁLCULO ACTUAL
             const facturacionActual = v * f;
             const costesFijosActuales = (p * 12) + (h * 12) + (v * foto);
             const netoActual = (facturacionActual * s) - costesFijosActuales;
 
-            // 2. CÁLCULO MONAPART
-            const ventasMona = v * 1.2; // +20% captación
-            const feesMona = f * 1.1;   // +10% honorarios
+            // 2. CÁLCULO MONAPART (Nuevos valores 14% y 8.5%)
+            const ventasMona = v * 1.14; 
+            const feesMona = f * 1.085;   
             const totalFacturadoMona = ventasMona * feesMona;
 
-            // Aplicar Split Progresivo Monapart
-            let brutoAgente = 0;
+            let brutoAgenteMona = 0;
             if (totalFacturadoMona <= 40000) {
-                brutoAgente = totalFacturadoMona * 0.73;
+                brutoAgenteMona = totalFacturadoMona * 0.73;
             } else if (totalFacturadoMona <= 80000) {
-                brutoAgente = (40000 * 0.73) + (totalFacturadoMona - 40000) * 0.77;
+                brutoAgenteMona = (40000 * 0.73) + (totalFacturadoMona - 40000) * 0.77;
             } else if (totalFacturadoMona <= 120000) {
-                brutoAgente = (40000 * 0.73) + (40000 * 0.77) + (totalFacturadoMona - 80000) * 0.88;
+                brutoAgenteMona = (40000 * 0.73) + (40000 * 0.77) + (totalFacturadoMona - 80000) * 0.88;
             } else {
-                brutoAgente = (40000 * 0.73) + (40000 * 0.77) + (40000 * 0.88) + (totalFacturadoMona - 120000) * 0.99;
+                brutoAgenteMona = (40000 * 0.73) + (40000 * 0.77) + (40000 * 0.88) + (totalFacturadoMona - 120000) * 0.99;
             }
 
-            // Gastos Monapart: 50€/mes + 100€/activación
             const costesMona = (50 * 12) + (ventasMona * 100);
-            const netoFinalMona = brutoAgente - costesMona;
+            const netoFinalMona = brutoAgenteMona - costesMona;
 
-            // Pintar resultados
-            document.getElementById('neto-actual').innerText = Math.max(0, Math.round(netoActual)).toLocaleString() + '€';
-            document.getElementById('neto-monapart').innerText = Math.round(netoFinalMona).toLocaleString() + '€';
+            // Pintar resultados con formato de puntos
+            document.getElementById('neto-actual').innerText = fmt(Math.max(0, netoActual)) + '€';
+            document.getElementById('neto-monapart').innerText = fmt(netoFinalMona) + '€';
             
             const diferencia = netoFinalMona - netoActual;
-            document.getElementById('ahorro-total').innerText = '+' + Math.round(diferencia).toLocaleString() + '€';
+            document.getElementById('ahorro-total').innerText = '+' + fmt(diferencia) + '€';
         }
 
         inputs.forEach(input => input.addEventListener('input', calcular));
