@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Monapart - Valora tu cambio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .slider { -webkit-appearance: none; width: 100%; height: 8px; border-radius: 5px; background: #e5e7eb; outline: none; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #000; cursor: pointer; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900 p-6">
+
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <header class="text-center mb-8">
+            <h1 class="text-2xl font-bold uppercase tracking-widest">Monapart</h1>
+            <p class="text-gray-500 mt-2">¿Cuánto ganarías si te vienes con nosotros?</p>
+        </header>
+
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Ventas anuales actuales: <span id="val-ventas" class="font-bold text-black">8</span></label>
+                <input type="range" id="ventas" min="1" max="40" value="8" class="slider">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Honorarios medios por venta: <span id="val-fees" class="font-bold text-black">8.000</span>€</label>
+                <input type="range" id="fees" min="3000" max="30000" step="500" value="8000" class="slider">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Tu split actual (lo que tú te quedas): <span id="val-split" class="font-bold text-black">50</span>%</label>
+                <input type="range" id="split" min="30" max="100" value="50" class="slider">
+            </div>
+        </div>
+
+        <hr class="my-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gray-50 p-6 rounded-xl">
+                <p class="text-xs uppercase tracking-tighter text-gray-400 font-bold mb-1">Situación Actual</p>
+                <p class="text-3xl font-light text-gray-800" id="neto-actual">0€</p>
+                <p class="text-xs text-gray-500 mt-2">Neto anual estimado</p>
+            </div>
+
+            <div class="bg-black p-6 rounded-xl">
+                <p class="text-xs uppercase tracking-tighter text-gray-400 font-bold mb-1">Con Monapart</p>
+                <p class="text-3xl font-bold text-white" id="neto-monapart">0€</p>
+                <p class="text-xs text-green-400 mt-2 font-medium" id="ahorro-total">+0€ de beneficio extra</p>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center space-x-3">
+                <span class="text-xl">⏱️</span>
+                <p class="text-sm"><strong class="block">300 horas</strong> ahorradas en gestiones al año.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-xl">📈</span>
+                <p class="text-sm"><strong class="block">+20% de captación</strong> por fuerza de marca.</p>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <a href="https://www.monapart.com/unete" class="block w-full bg-black text-white text-center py-4 rounded-lg font-bold hover:bg-gray-800 transition">Hablemos de tu cambio</a>
+        </div>
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('input');
+        
+        function calcular() {
+            // Valores de entrada
+            const v = parseInt(document.getElementById('ventas').value);
+            const f = parseInt(document.getElementById('fees').value);
+            const s = parseInt(document.getElementById('split').value) / 100;
+
+            document.getElementById('val-ventas').innerText = v;
+            document.getElementById('val-fees').innerText = f.toLocaleString();
+            document.getElementById('val-split').innerText = (s * 100).toFixed(0);
+
+            // 1. CALCULO ACTUAL
+            const facturacionActual = v * f;
+            const netoActual = facturacionActual * s;
+
+            // 2. CALCULO MONAPART
+            const ventasMona = v * 1.2; // +20% ventas
+            const feesMona = f * 1.1;   // +10% fees
+            const totalFacturadoMona = ventasMona * feesMona;
+
+            // Split progresivo
+            let netoRetenidoMona = 0;
+            if (totalFacturadoMona <= 40000) {
+                netoRetenidoMona = totalFacturadoMona * 0.73;
+            } else if (totalFacturadoMona <= 80000) {
+                netoRetenidoMona = (40000 * 0.73) + (totalFacturadoMona - 40000) * 0.77;
+            } else if (totalFacturadoMona <= 120000) {
+                netoRetenidoMona = (40000 * 0.73) + (40000 * 0.77) + (totalFacturadoMona - 80000) * 0.88;
+            } else {
+                netoRetenidoMona = (40000 * 0.73) + (40000 * 0.77) + (40000 * 0.88) + (totalFacturadoMona - 120000) * 0.99;
+            }
+
+            // Gastos Monapart
+            const gastosFijosMona = 600 + (ventasMona * 100);
+            const netoFinalMona = netoRetenidoMona - gastosFijosMona;
+
+            // Pintar resultados
+            document.getElementById('neto-actual').innerText = Math.round(netoActual).toLocaleString() + '€';
+            document.getElementById('neto-monapart').innerText = Math.round(netoFinalMona).toLocaleString() + '€';
+            
+            const diferencia = netoFinalMona - netoActual;
+            document.getElementById('ahorro-total').innerText = '+' + Math.round(diferencia).toLocaleString() + '€ de beneficio extra';
+        }
+
+        inputs.forEach(input => input.addEventListener('input', calcular));
+        calcular();
+    </script>
+</body>
+</html>
