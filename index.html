@@ -26,7 +26,6 @@
         
         .lora-text { font-family: 'Lora', serif; font-size: 1.56rem; font-weight: 400; text-transform: none; }
         
-        /* Nuevo estilo para el subtítulo */
         .roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; font-size: 20px; color: #000; line-height: 1.4; }
 
         .section-header { font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
@@ -196,7 +195,9 @@
             document.getElementById('neto-monapart').innerText = fmt(netoFinalMona) + '€';
             
             const diferencia = netoFinalMona - netoActual;
-            document.getElementById('ahorro-total').innerText = '+' + fmt(diferencia) + '€';
+            // Cambio realizado aquí para evitar el error de doble signo +-
+            const signoIncremento = diferencia >= 0 ? '+' : '';
+            document.getElementById('ahorro-total').innerText = signoIncremento + fmt(diferencia) + '€';
         }
 
         inputs.forEach(input => input.addEventListener('input', calcular));
