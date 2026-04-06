@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <a href="https://www.monapart.com/agentes/" class="btn-monapart block w-full text-center py-5 mt-6 tracking-tight rounded-sm">Pinta bien, mirémoslo en detalle</a>
+                    <a href="https://www.monapart.com/agentes/" target="_blank" rel="noopener noreferrer" class="btn-monapart block w-full text-center py-5 mt-6 tracking-tight rounded-sm">Pinta bien, mirémoslo en detalle</a>
                 </div>
             </div>
         </div>
@@ -195,7 +195,6 @@
             document.getElementById('neto-monapart').innerText = fmt(netoFinalMona) + '€';
             
             const diferencia = netoFinalMona - netoActual;
-            // Cambio realizado aquí para evitar el error de doble signo +-
             const signoIncremento = diferencia >= 0 ? '+' : '';
             document.getElementById('ahorro-total').innerText = signoIncremento + fmt(diferencia) + '€';
         }
